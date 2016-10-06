@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Thánh nấu</string>
+    <string name="planner">Lịch nấu</string>
+    <string name="recipe">Công thức của tôi</string>
+    <string name="shopping">Đi chợ</string>
+    <string name="home">Trang chính</string>
+    <string name="action_settings">Cài đặt</string>
+    <string name="search_hint">Tìm công thức</string>
+</resources>
