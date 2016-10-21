@@ -7,4 +7,8 @@
     <string name="home">Trang chính</string>
     <string name="action_settings">Cài đặt</string>
     <string name="search_hint">Tìm công thức</string>
+    <string name="login_message">Vui lòng đăng nhập</string>
+    <string name="login_cancel">Kết nối bị hủy bỏ</string>
+    <string name="login_fail">Đăng nhập thất bại</string>
+    <string name="login_success">Đăng nhập thành công</string>
 </resources>

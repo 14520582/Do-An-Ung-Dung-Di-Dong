@@ -3,15 +3,23 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
+    <string name="login_message">Click here to login</string>
     <string name="action_settings">Settings</string>
     <string name="home">Home</string>
     <string name="recipe">My Recipes</string>
     <string name="shopping">Shopping List</string>
+    <string name="login_success">Login Successful!</string>
+    <string name="login_fail">Login unsuccessful!</string>
+    <string name="login_cancel">Login cancelled by user!</string>
     <string name="planner">Meal Planner</string>
     <string name="search_hint">Search for recipes</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="user">UserName</string>
+    <string name="firebase_error_login">Firebase error</string>
+    <string name="cancel_login">UserName</string>
+    <string name="error_login">UserName</string>
+    <string name="logout">Log out</string>
     <string name="email">email@gm.uit.edu.vn</string>
+    <string name="facebook_app_id">138370893292795</string>
 </resources>
