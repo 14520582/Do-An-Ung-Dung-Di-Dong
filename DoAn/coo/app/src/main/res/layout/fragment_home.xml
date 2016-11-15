@@ -1,33 +1,43 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.nghia.coo.HomeFragment"
-    android:layout_alignParentStart="true">
+    android:layout_alignParentStart="true"
+    android:orientation="vertical">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
+
+
+    <Button
+        android:id="@+id/buttonAddRecipe"
+        android:text="@string/whatdish"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="chứa newfeed"
-        android:padding="8dp"
-        android:textColor="#fff"
-        android:background="@color/colorPrimary"
-        android:textSize="28sp"
-        android:id="@+id/textView"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentStart="false" />
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/addRecipe"
+        style="@style/Base.Widget.AppCompat.Button.Colored"
+        android:drawableLeft="@drawable/ic_pen_addrecipe"
+        android:background="@drawable/side_nav_bar"
+        android:textAlignment="center"
+        android:gravity="center_vertical" />
+
 
     <SearchView
-        android:id="@+id/searchView"
+        android:id="@+id/searchView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:queryHint="@string/search_hint"
-        android:layout_marginTop="@android:dimen/app_icon_size"
         android:focusable="true"
         android:iconifiedByDefault="false"
          />
 
-</RelativeLayout>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:id="@+id/listViewHome" />
+
+</LinearLayout>

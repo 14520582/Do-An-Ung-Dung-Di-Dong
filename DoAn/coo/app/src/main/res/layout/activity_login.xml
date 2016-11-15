@@ -44,5 +44,15 @@
             android:paddingTop="10dp"
             android:layout_weight="0" />
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="false"
+        android:layout_centerVertical="false"
+        android:indeterminate="true"
+        android:visibility="gone"
+        android:layout_gravity="center_horizontal" />
 
 </LinearLayout>

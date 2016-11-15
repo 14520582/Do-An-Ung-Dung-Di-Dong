@@ -5,10 +5,28 @@
     <string name="recipe">Công thức của tôi</string>
     <string name="shopping">Đi chợ</string>
     <string name="home">Trang chính</string>
+    <string name="upload">Đăng công thức</string>
     <string name="action_settings">Cài đặt</string>
+    <string name="step1">Bước: 1</string>
+    <string name="step">Bước: </string>
+    <string name="titilerecipe">Công thức</string>
     <string name="search_hint">Tìm công thức</string>
     <string name="login_message">Vui lòng đăng nhập</string>
     <string name="login_cancel">Kết nối bị hủy bỏ</string>
     <string name="login_fail">Đăng nhập thất bại</string>
     <string name="login_success">Đăng nhập thành công</string>
+    <string name="logout">Đăng xuất</string>
+    <string name="login_load">Vui lòng đợi giây lát!</string>
+    <string name="addStep">Thêm Bước</string>
+    <string name="deleteStep">Xóa Bước</string>
+    <string name="dvration">Người</string>
+    <string name="addrecipe">Cách làm</string>
+    <string name="dvtime">Phút</string>
+    <string name="isEmpty">Vui lòng điền đầy đủ!</string>
+    <string name="material">Nguyên liệu</string>
+    <string name="example">Ví dụ: 120 gram Gà \nVí dụ: 50 gram Đường</string>
+    <string name="namedish">Tên món ăn của bạn?</string>
+    <string name="whatdish">Bạn có mòn gì cho hôm nay?</string>
+    <string name="time"><font size="12">Thời gian</font></string>
+    <string name="ration"><font size="12">Khẩu phần</font></string>
 </resources>

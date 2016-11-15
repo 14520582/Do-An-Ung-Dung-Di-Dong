@@ -23,7 +23,9 @@ public class PlannerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_planner, container, false);
+        View view= inflater.inflate(R.layout.fragment_planner, container, false);
+        ((MainActivity) getActivity()).setActionBarTitle(getString(R.string.planner));
+        return view;
     }
 
 }

@@ -9,6 +9,8 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -28,21 +30,26 @@ import com.google.firebase.auth.FirebaseUser;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import static com.example.nghia.coo.R.id.fb_login_button;
+
 public class LoginActivity extends AppCompatActivity {
     private CallbackManager callbackManager;
     private LoginButton fbLoginButton;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private String TAG="Login";
-
+    private TextView logintext;
+  //  private ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         callbackManager = CallbackManager.Factory.create();
         getFbKeyHash("com.example.nghia.coo");
         setContentView(R.layout.activity_login);
-        fbLoginButton = (LoginButton) findViewById(R.id.fb_login_button);
+      //  progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        fbLoginButton = (LoginButton) findViewById(fb_login_button);
 
+         logintext=(TextView) findViewById(R.id.textView2) ;
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -58,6 +65,7 @@ public class LoginActivity extends AppCompatActivity {
                 // ...
             }
         };
+        fbLoginButton.setReadPermissions("email", "public_profile");
         fbLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) { //
@@ -68,21 +76,21 @@ public class LoginActivity extends AppCompatActivity {
                 //   System.out.println("--------------------------");
                 //   System.out.println("User ID  : " + loginResult.getAccessToken().getUserId());
                 //  System.out.println("Authentication Token : " + loginResult.getAccessToken().getToken());
-                  Toast.makeText(LoginActivity.this, "Login Successful!", Toast.LENGTH_LONG).show();
+                  Toast.makeText(LoginActivity.this, getString(R.string.login_success), Toast.LENGTH_LONG).show();
 
-                  goMainScreen();
+                //  goMainScreen();
             }
 
             @Override
             public void onCancel() {
-                Toast.makeText(LoginActivity.this, "Login cancelled by user!", Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this, getString(R.string.login_cancel), Toast.LENGTH_LONG).show();
                 System.out.println("Facebook Login failed!!");
 
             }
 
             @Override
             public void onError(FacebookException e) {
-                Toast.makeText(LoginActivity.this, "Login unsuccessful!", Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this,getString(R.string.login_fail), Toast.LENGTH_LONG).show();
                 System.out.println("Facebook Login failed!!");
             }
         });
@@ -155,6 +163,9 @@ public class LoginActivity extends AppCompatActivity {
         firebaseAuth.removeAuthStateListener(firebaseAuthListener);
     }*/
 private void handleFacebookAccessToken(AccessToken token) {
+    logintext.setText(getString(R.string.login_load));
+  //  progressBar.setVisibility(View.VISIBLE);
+    fbLoginButton.setVisibility(View.GONE);
     Log.d(TAG, "handleFacebookAccessToken:" + token);
 
     AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
@@ -163,7 +174,7 @@ private void handleFacebookAccessToken(AccessToken token) {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
-                  //  goMainScreen();
+                    goMainScreen();
                     // If sign in fails, display a message to the user. If sign in succeeds
                     // the auth state listener will be notified and logic to handle the
                     // signed in user can be handled in the listener.
@@ -172,7 +183,9 @@ private void handleFacebookAccessToken(AccessToken token) {
                         Toast.makeText(LoginActivity.this, "Authentication failed.",
                                 Toast.LENGTH_SHORT).show();
                     }
-
+                    logintext.setText(getString(R.string.login_message));
+                //    progressBar.setVisibility(View.GONE);
+                    fbLoginButton.setVisibility(View.VISIBLE);
                     // ...
                 }
             });

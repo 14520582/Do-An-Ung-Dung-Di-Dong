@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_add_recipe"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.nghia.coo.AddRecipeActivity"
+    android:orientation="vertical"
+    android:background="@color/common_google_signin_btn_text_light_disabled">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/linearlayoutView">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/linearlayout1View">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+
+                        android:id="@+id/coverRecipeView"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitCenter" />
+
+
+
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:ems="10"
+                    android:id="@+id/textNameView"
+                    android:background="@drawable/rounded_edittext"
+                    android:drawableLeft="@android:drawable/ic_menu_myplaces"
+                    android:layout_marginTop="5dp"
+                    android:textSize="24sp"
+                    android:textStyle="normal|bold"
+                    android:textColor="?android:attr/colorFocusedHighlight"
+                    android:textColorHint="@color/com_facebook_button_background_color_disabled"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        app:srcCompat="@drawable/ic_alert_name"
+                        android:id="@+id/imagealertView"
+                        android:layout_weight="0.00"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:inputType="number"
+                        android:id="@+id/editTextTimeView"
+                        android:textColorHint="@color/com_facebook_button_background_color_disabled"
+                        android:textColorLink="@color/colorAccent"
+                        android:gravity="center_vertical"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginRight="5dp" />
+
+                    <TextView
+                        android:text="@string/dvtime"
+                        android:layout_width="wrap_content"
+                        android:id="@+id/textView3"
+                        android:layout_height="match_parent"
+                        android:gravity="center" />
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        app:srcCompat="@drawable/ic_ration_name"
+                        android:id="@+id/imageRationView"
+                        android:layout_weight="0.00" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:inputType="number"
+                        android:id="@+id/editTextRationView"
+                        android:textColorHint="@color/com_facebook_button_background_color_disabled"
+                        android:textColorLink="@color/colorAccent"
+                        android:gravity="center_vertical"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginRight="5dp" />
+
+                    <TextView
+                        android:text="@string/dvration"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:id="@+id/textViewRationView"
+                        android:gravity="center" />
+
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <Button
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/buttonaddshopping"
+                        android:layout_alignParentRight="true"
+                        android:textSize="10sp"
+                        android:layout_alignBottom="@+id/textViewView"
+                        android:layout_alignParentTop="true"
+                        android:drawableLeft="@drawable/ic_shopping_button"
+                        android:background="@android:color/transparent" />
+
+                    <TextView
+                        android:text="@string/material"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textViewView"
+                        android:textSize="25sp"
+                        android:textStyle="normal|bold" />
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:ems="10"
+                    android:ellipsize="start"
+                    android:background="@drawable/material"
+                    android:id="@+id/editTextMaterial"
+                    android:textAlignment="center"
+                    android:textSize="16sp"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp" />
+
+                <TextView
+                    android:text="@string/addrecipe"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewView6"
+                    android:textSize="25sp"
+                    android:textStyle="normal|bold" />
+
+
+
+
+            </LinearLayout>
+
+            <ListView
+                android:layout_width="match_parent"
+                android:id="@+id/listViewImplement"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+</RelativeLayout>

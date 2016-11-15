@@ -8,9 +8,26 @@
     <string name="home">Home</string>
     <string name="recipe">My Recipes</string>
     <string name="shopping">Shopping List</string>
+    <string name="time">Time</string>
+    <string name="addrecipe">Implement</string>
+    <string name="dvtime">Minutes</string>
+    <string name="dvration">People</string>
+    <string name="upload">Upload Recipe</string>
+    <string name="titilerecipe">Recipe</string>
+    <string name="step1">Step: 1</string>
+    <string name="step">Step: </string>
+    <string name="addStep">Next Step</string>
+    <string name="deleteStep">Delete Step</string>
+    <string name="whatdish">"What's dish, today?"</string>
+    <string name="isEmpty">Please fill fully!</string>
+    <string name="namedish">"What's name of my dish?"</string>
+    <string name="material">Material</string>
+    <string name="example">Example: 120 gram Chicken \n Example: 50 gram Sugar</string>
+    <string name="ration">Ration</string>
     <string name="login_success">Login Successful!</string>
     <string name="login_fail">Login unsuccessful!</string>
     <string name="login_cancel">Login cancelled by user!</string>
+    <string name="login_load">Please wait....</string>
     <string name="planner">Meal Planner</string>
     <string name="search_hint">Search for recipes</string>
     <!-- TODO: Remove or change this placeholder text -->
