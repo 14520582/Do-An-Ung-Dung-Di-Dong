@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class Recipe implements Serializable {
     public String namerecipe, image, material;
-    public String time,ration;
+    public String time,ration,user,key;
     public ArrayList<String> implement=new ArrayList<String>();
     public Recipe(){}
     public Recipe(String Namerecipe, String Image, String Material, String Time, String Ration, ArrayList<String> Recipes){
@@ -18,7 +18,8 @@ public class Recipe implements Serializable {
         material=Material;
         time=Time;
         ration=Ration;
-
+       // user=User;
+       // key=Key;
         implement=Recipes;
     }
 }

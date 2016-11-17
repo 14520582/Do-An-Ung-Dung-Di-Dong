@@ -1,6 +1,6 @@
 package com.example.nghia.coo;
 
-import android.database.Cursor;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -17,17 +17,20 @@ import com.squareup.picasso.Picasso;
 public class ViewRecipeActivity extends AppCompatActivity {
 
     Recipe curRecipe=new Recipe();
+    UserKey curUserKey=new UserKey();
     private LinearLayout mLayout;
     TextView name,time,ration,material;
     ListView listview;
     ImageView cover;
-    Button addshopping;
+    Button addshopping,setschedule;
     ItemImplementAdapter adapter=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_recipe);
         curRecipe=(Recipe)getIntent().getSerializableExtra("TheRecipe");
+        curUserKey=(UserKey)getIntent().getSerializableExtra("UserKey");
+
         Mapping();
 
         name.setText(curRecipe.namerecipe);
@@ -53,15 +56,28 @@ public class ViewRecipeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 db.QueryData("CREATE TABLE IF NOT EXISTS Shopping(Id INTEGER PRIMARY KEY AUTOINCREMENT,Name VARCHAR,Ration VARCHAR,Implement TEXT)");
                 db.QueryData("INSERT INTO Shopping VALUES(null,'"+curRecipe.namerecipe+"','"+curRecipe.ration+"','"+curRecipe.material+"')");
-                Cursor cur =db.GetData("SELECT * FROM Shopping");
-                while(cur.moveToNext()){
-                    Toast.makeText(ViewRecipeActivity.this, cur.getString(1), Toast.LENGTH_LONG).show();
-                }
+                Toast.makeText(ViewRecipeActivity.this, R.string.addedshopping, Toast.LENGTH_SHORT).show();
+
+
+            }
+        });
+        setschedule.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                goSetSchedule();
+
             }
         });
 
     }
-
+    private void goSetSchedule() {
+        Intent intent = new Intent(this,SetScheduleActivity.class);
+        intent.putExtra("UserKey",curUserKey);
+        intent.putExtra("Image",curRecipe.image);
+        // intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
     private void Mapping(){
         mLayout = (LinearLayout) findViewById(R.id.linearlayout1View);
         name=(TextView) findViewById(R.id.textNameView);
@@ -71,5 +87,6 @@ public class ViewRecipeActivity extends AppCompatActivity {
         cover=(ImageView) findViewById(R.id.coverRecipeView);
         listview=(ListView) findViewById(R.id.listViewImplement);
         addshopping=(Button) findViewById(R.id.buttonaddshopping);
+        setschedule=(Button) findViewById(R.id.buttonPlannerRecipe);
     }
 }

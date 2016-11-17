@@ -30,7 +30,7 @@ public class HomeFragment extends Fragment {
   //  private SearchView searchview;
     private DatabaseReference mDatabase;
     private ListView listview;
-    ArrayList<String> listID =new ArrayList<String>();
+    ArrayList<UserKey> listUserKey =new ArrayList<UserKey>();
     ArrayList<Recipe> listrecipe=new ArrayList<Recipe>();
     RecipeAdapter rpAdapter=null;
     boolean ready =false;
@@ -61,7 +61,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        rpAdapter = new RecipeAdapter(this.getContext(),R.layout.introrecipe,listrecipe);
+        rpAdapter = new RecipeAdapter(this.getContext(),R.layout.introrecipe,listrecipe,listUserKey);
        // String a= new String (listID.get(0));
 
       //  Toast.makeText(getActivity(), listID.size()+"", Toast.LENGTH_LONG).show();
@@ -76,17 +76,20 @@ public class HomeFragment extends Fragment {
      //   for(int i=0;i<listID.size();i++){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
        // Toast.makeText(getActivity(), listID.get(0), Toast.LENGTH_LONG).show();
-        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot dsp : dataSnapshot.getChildren()){
+                    final String user=dsp.getKey();
                     mDatabase.child(dsp.getKey()).child("Recipes").addChildEventListener(new ChildEventListener() {
                         @Override
                         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                             Recipe rp= dataSnapshot.getValue(Recipe.class);
-                            // Toast.makeText(getApplicationContext(), rp.toString(), Toast.LENGTH_LONG).show();
+                            UserKey tm=new UserKey(user,dataSnapshot.getKey());
+                            // Toast.makeText(getApplicationContext(), dataSnapshot.getKey(), Toast.LENGTH_SHORT).show();
                             listrecipe.add(0,new Recipe(rp.namerecipe,rp.image,rp.material,rp.time,rp.ration,rp.implement));
+                            listUserKey.add(0,tm);
                             rpAdapter.notifyDataSetChanged();
                         }
 

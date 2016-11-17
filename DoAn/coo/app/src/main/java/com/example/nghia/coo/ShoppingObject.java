@@ -29,10 +29,4 @@ public class ShoppingObject {
         listimplement=tem;
     }
 
- /*   public ShoppingObject(int ID,String name, String ration, ArrayList<String> listimplement) {
-        Name = name;
-        id=ID;
-        this.listimplement = listimplement;
-        Ration = ration;
-    }*/
 }

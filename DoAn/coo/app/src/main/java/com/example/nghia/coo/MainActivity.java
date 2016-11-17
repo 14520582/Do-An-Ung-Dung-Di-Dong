@@ -43,9 +43,10 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         String name="null",email="null";
 
-       // final SQLite db = new SQLite(this,"Shopping.sqlite",null,1);
-      //  db.QueryData("DROP TABLE IF EXISTS Shopping");
-       FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        final SQLite db = new SQLite(this,"Shopping.sqlite",null,1);
+        db.QueryData("CREATE TABLE IF NOT EXISTS Schedule(Id INTEGER PRIMARY KEY AUTOINCREMENT,Name VARCHAR,DateTime VARCHAR,Image TEXT,User VARCHAR,Key VARCHAR)");
+        db.QueryData("CREATE TABLE IF NOT EXISTS Shopping(Id INTEGER PRIMARY KEY AUTOINCREMENT,Name VARCHAR,Ration VARCHAR,Implement TEXT)");
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
 
                 name = user.getDisplayName();

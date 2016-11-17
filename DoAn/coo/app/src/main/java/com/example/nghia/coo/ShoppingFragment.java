@@ -34,10 +34,12 @@ public class ShoppingFragment extends Fragment {
         listview=(ListView) view.findViewById(R.id.shoppingout);
         shoppingAdapter = new ListShoppingAdapter(this.getContext(),R.layout.layout_list_shopping,arrayList);
         Cursor cur =db.GetData("SELECT * FROM Shopping");
-        while(cur.moveToNext()){
-            ShoppingObject tem=new ShoppingObject(cur.getInt(0),cur.getString(1),cur.getString(2),cur.getString(3));
+        while(cur.moveToNext()) {
+            ShoppingObject tem = new ShoppingObject(cur.getInt(0), cur.getString(1), cur.getString(2), cur.getString(3));
             arrayList.add(tem);
+            shoppingAdapter.notifyDataSetChanged();
         }
+
         listview.setAdapter(shoppingAdapter);
         return view;
     }

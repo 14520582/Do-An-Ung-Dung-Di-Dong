@@ -33,8 +33,12 @@
         <activity
             android:name=".AddRecipeActivity"
             android:label="@string/upload" />
-        <activity android:name=".ViewRecipeActivity"
-            android:label="@string/titilerecipe" ></activity>
+        <activity
+            android:name=".ViewRecipeActivity"
+            android:label="@string/titilerecipe" />
+        <activity android:name=".SetScheduleActivity"
+            android:label="@string/setplanner"></activity>
+        <receiver android:name=".NotificationPublisher"></receiver>
     </application>
 
 </manifest>

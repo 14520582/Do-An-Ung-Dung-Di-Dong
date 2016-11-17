@@ -23,11 +23,14 @@ public class RecipeAdapter extends BaseAdapter {
     Context context;
     int mLayout;
     List<Recipe> arrayRecipe;
+    List<UserKey> arrayUserKey;
     Recipe curRecipe;
-    public RecipeAdapter(Context context, int mLayout, List<Recipe> arrayRecipe) {
+    UserKey curUserKey;
+    public RecipeAdapter(Context context, int mLayout, List<Recipe> arrayRecipe,List<UserKey> arrayUserKey) {
         this.context = context;
         this.mLayout = mLayout;
         this.arrayRecipe = arrayRecipe;
+        this.arrayUserKey=arrayUserKey;
     }
 
     @Override
@@ -75,6 +78,8 @@ public class RecipeAdapter extends BaseAdapter {
         final String material=arrayRecipe.get(position).material;
         final String time=arrayRecipe.get(position).time;
         final String ration=arrayRecipe.get(position).ration;
+        final String user = arrayUserKey.get(position).user;
+        final String key = arrayUserKey.get(position).key;
         final ArrayList<String> imp =new ArrayList<String>(arrayRecipe.get(position).implement);
 
         Picasso.with(context).load(arrayRecipe.get(position).image).into(holder.cover);
@@ -85,15 +90,16 @@ public class RecipeAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 curRecipe = new Recipe(name,image,material,time,ration,imp);
-              //  Toast.makeText(convertView.getContext(), curRecipe.namerecipe, Toast.LENGTH_SHORT).show();
-                goViewRecipeScreen(curRecipe);
+                curUserKey=new UserKey(user,key);
+                goViewRecipeScreen(curRecipe,curUserKey);
             }
         });
         return rowview;
     }
-    private void goViewRecipeScreen(Recipe currecipe) {
+    private void goViewRecipeScreen(Recipe currecipe,UserKey curuserkey) {
         Intent intent = new Intent(context, ViewRecipeActivity.class);
         intent.putExtra("TheRecipe",currecipe);
+        intent.putExtra("UserKey",curuserkey);
       //  intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }

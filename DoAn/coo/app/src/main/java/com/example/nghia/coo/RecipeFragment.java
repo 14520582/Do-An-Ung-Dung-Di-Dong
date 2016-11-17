@@ -29,6 +29,7 @@ public class RecipeFragment extends Fragment {
     private SearchView searchview;
     private DatabaseReference mDatabase;
     ArrayList<Recipe> listrecipe=new ArrayList<Recipe>();
+    ArrayList<UserKey> listUserKey=new ArrayList<UserKey>();
     RecipeAdapter rpAdapter=null;
     public RecipeFragment() {
         // Required empty public constructor
@@ -43,7 +44,7 @@ public class RecipeFragment extends Fragment {
         ((MainActivity) getActivity()).setActionBarTitle(getString(R.string.recipe));
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-       rpAdapter = new RecipeAdapter(this.getContext(),R.layout.introrecipe,listrecipe);
+       rpAdapter = new RecipeAdapter(this.getContext(),R.layout.introrecipe,listrecipe,listUserKey);
         LoadData();
 
         Mapping();
@@ -57,13 +58,15 @@ public class RecipeFragment extends Fragment {
       //  searchview=(SearchView) view.findViewById(R.id.searchView);
     }
     private void LoadData(){
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         mDatabase.child(user.getUid().toString()).child("Recipes").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Recipe rp= dataSnapshot.getValue(Recipe.class);
+                UserKey tm=new UserKey(user.getUid().toString(),dataSnapshot.getKey());
               // Toast.makeText(getApplicationContext(), rp.toString(), Toast.LENGTH_LONG).show();
                 listrecipe.add(0,new Recipe(rp.namerecipe,rp.image,rp.material,rp.time,rp.ration,rp.implement));
+                listUserKey.add(0,tm);
                 rpAdapter.notifyDataSetChanged();
             }
 

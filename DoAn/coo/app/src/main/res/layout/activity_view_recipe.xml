@@ -133,8 +133,20 @@
                         android:textSize="10sp"
                         android:layout_alignBottom="@+id/textViewView"
                         android:layout_alignParentTop="true"
-                        android:drawableLeft="@drawable/ic_shopping_button"
-                        android:background="@android:color/transparent" />
+                        android:background="@android:color/transparent"
+                        android:drawableLeft="@drawable/ic_add_shopping" />
+
+                    <Button
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/buttonPlannerRecipe"
+                        android:background="@android:color/transparent"
+                        android:textSize="10sp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="43dp"
+                        android:layout_alignBottom="@+id/textViewView"
+                        android:layout_alignParentTop="true"
+                        android:drawableLeft="@drawable/ic_planner_recipe" />
 
                     <TextView
                         android:text="@string/material"
