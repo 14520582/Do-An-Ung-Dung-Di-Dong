@@ -19,8 +19,6 @@ import android.widget.ImageView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
@@ -28,7 +26,6 @@ import java.util.Date;
 
 public class SetScheduleActivity extends AppCompatActivity {
     ImageView coverSchedule;
-    private DatabaseReference mDatabase;
     UserKey curUserKey=new UserKey();
     String photoCover;
     EditText nameEvent;
@@ -39,7 +36,6 @@ public class SetScheduleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_schedule);
-        mDatabase = FirebaseDatabase.getInstance().getReference();
         Mapping();
         final SQLite db = new SQLite(this,"Shopping.sqlite",null,1);
         Picasso.with(this).load(photoCover).into(coverSchedule);

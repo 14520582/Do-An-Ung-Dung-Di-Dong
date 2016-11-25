@@ -15,7 +15,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp" />
 
-    <LinearLayout
+    <RelativeLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,20 +36,32 @@
             android:textColorHint="@color/com_facebook_button_background_color_disabled"
             android:textColorLink="@color/colorAccent"
             android:gravity="center_vertical"
-            android:layout_marginLeft="2dp"
-            android:layout_marginRight="5dp" />
+            android:layout_marginLeft="42dp"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp" />
 
         <TextView
             android:text="@string/dvration"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="40dp"
             android:id="@+id/textViewRationView"
-            android:gravity="center"  />
+            android:gravity="center"
+            android:layout_marginLeft="62dp" />
 
-    </LinearLayout>
+        <Button
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/removeShopping"
+            android:layout_alignParentRight="true"
+            android:drawableLeft="@drawable/ic_remove_shopping"
+            android:layout_marginRight="5dp"
+            android:background="@android:color/transparent" />
+
+    </RelativeLayout>
 
     <ListView
         android:layout_width="match_parent"
-        android:id="@+id/listviewShopping"
-        android:layout_height="400dp" />
+        android:layout_height="match_parent"
+        android:id="@+id/listviewShopping" />
+
 </LinearLayout>

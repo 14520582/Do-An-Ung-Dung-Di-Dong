@@ -41,11 +41,14 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_main);
+
+
         String name="null",email="null";
 
-       // final SQLite db = new SQLite(this,"Shopping.sqlite",null,1);
-      //  db.QueryData("DROP TABLE IF EXISTS Shopping");
-       FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        final SQLite db = new SQLite(this,"Shopping.sqlite",null,1);
+        db.QueryData("CREATE TABLE IF NOT EXISTS Schedule(Id INTEGER PRIMARY KEY AUTOINCREMENT,Name VARCHAR,DateTime VARCHAR,Image TEXT,User VARCHAR,Key VARCHAR)");
+        db.QueryData("CREATE TABLE IF NOT EXISTS Shopping(Id INTEGER PRIMARY KEY AUTOINCREMENT,Name VARCHAR,Ration VARCHAR,Implement TEXT)");
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
 
                 name = user.getDisplayName();
@@ -54,7 +57,7 @@ public class MainActivity extends AppCompatActivity
                 photoUrl = user.getPhotoUrl();
                 //  String uid = user.getUid();
 
-            mDatabase.child(user.getUid().toString()).child("User").child("Name").setValue(name, new DatabaseReference.CompletionListener(){
+            mDatabase.child("User").child(user.getUid().toString()).child("Name").setValue(name, new DatabaseReference.CompletionListener(){
                 @Override
                 public void onComplete (DatabaseError databaseError, DatabaseReference databaseReference){
                     if(databaseError==null)
@@ -64,7 +67,7 @@ public class MainActivity extends AppCompatActivity
                     }
                 }
             });
-            mDatabase.child(user.getUid().toString()).child("User").child("Image").setValue(String.valueOf(photoUrl), new DatabaseReference.CompletionListener(){
+            mDatabase.child("User").child(user.getUid().toString()).child("Image").setValue(String.valueOf(photoUrl), new DatabaseReference.CompletionListener(){
                 @Override
                 public void onComplete (DatabaseError databaseError, DatabaseReference databaseReference){
                     if(databaseError==null)
@@ -78,37 +81,17 @@ public class MainActivity extends AppCompatActivity
         } else {
             goLoginScreen();
               }
-    //      if (AccessToken.getCurrentAccessToken() == null) {
-     //      goLoginScreen();
 
-     //   }
-    /*    mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.child(user.getUid().toString()).child("User").child("Name").setValue(name, new DatabaseReference.CompletionListener(){
-            @Override
-            public void onComplete (DatabaseError databaseError, DatabaseReference databaseReference){
-                if(databaseError==null)
-                {
-                    Toast.makeText(MainActivity.this, "luu ten thanh cong", Toast.LENGTH_LONG).show();
-
-                }
-            }
-        });
-        mDatabase.child(user.getUid().toString()).child("User").child("Image").setValue(String.valueOf(photoUrl), new DatabaseReference.CompletionListener(){
-            @Override
-            public void onComplete (DatabaseError databaseError, DatabaseReference databaseReference){
-                if(databaseError==null)
-                {
-                    Toast.makeText(MainActivity.this, "luu hinh thanh cong", Toast.LENGTH_LONG).show();
-
-                }
-            }
-        });*/
-        setContentView(R.layout.activity_main);
+        //setContentView(R.layout.activity_main);
         HomeFragment fragment = new HomeFragment();
+        Bundle first=new Bundle();
+        first.putBoolean("isFirst",true);
+        fragment.setArguments(first);
         android.support.v4.app.FragmentTransaction fragmentTransaction =
                 getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment);
         fragmentTransaction.commit();
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -130,6 +113,7 @@ public class MainActivity extends AppCompatActivity
         facebookName.setText(name);
         facebookEmail.setText(email);
         Picasso.with(this).load(photoUrl).into(image_profile);
+
        // String a=new String(Profile.getCurrentProfile().getName());
         //if(a!=null)
         //facebookName.setText("asd");
@@ -193,7 +177,9 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_home) {
 
             HomeFragment fragment = new HomeFragment();
-            //fragment.getActivity().setTitle("Home");
+            Bundle first=new Bundle();
+            first.putBoolean("isFirst",false);
+            fragment.setArguments(first);
             android.support.v4.app.FragmentTransaction fragmentTransaction =
                     getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, fragment);
@@ -201,7 +187,6 @@ public class MainActivity extends AppCompatActivity
             // Handle the camera action
         } else if (id == R.id.nav_recipe) {
             RecipeFragment fragment = new RecipeFragment();
-           // fragment.getActivity().setTitle("My Recipes");
             android.support.v4.app.FragmentTransaction fragmentTransaction =
                     getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, fragment);
@@ -209,14 +194,18 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_shopping) {
 
             ShoppingFragment fragment = new ShoppingFragment();
-          //  fragment.getActivity().setTitle("Shopping List");
             android.support.v4.app.FragmentTransaction fragmentTransaction =
                     getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, fragment);
             fragmentTransaction.commit();
         } else if (id == R.id.nav_planner) {
             PlannerFragment fragment = new PlannerFragment();
-           // fragment.getActivity().setTitle("Meal Planner");
+            android.support.v4.app.FragmentTransaction fragmentTransaction =
+                    getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, fragment);
+            fragmentTransaction.commit();
+        }else if (id == R.id.nav_follow) {
+            FollowFragment fragment = new FollowFragment();
             android.support.v4.app.FragmentTransaction fragmentTransaction =
                     getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, fragment);

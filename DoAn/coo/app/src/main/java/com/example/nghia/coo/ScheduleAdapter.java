@@ -16,6 +16,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -28,7 +33,6 @@ public class ScheduleAdapter extends BaseAdapter{
     Context context;
     int mLayout;
     List<ScheduleObject> arraySchedule;
-
     public ScheduleAdapter(Context context, int mLayout, List<ScheduleObject> arraySchedule) {
         this.context = context;
         this.mLayout = mLayout;
@@ -52,7 +56,7 @@ public class ScheduleAdapter extends BaseAdapter{
     private class ViewHolder {
         ImageView coverSchedule;
         TextView name,datetime;
-        Button buttoncancel;
+        Button buttoncancel,viewrecipe;
 
     }
     @Override
@@ -67,6 +71,8 @@ public class ScheduleAdapter extends BaseAdapter{
             holder.name=(TextView) rowview.findViewById(R.id.textnamevent);
             holder.datetime=(TextView) rowview.findViewById(R.id.textdatetime);
             holder.buttoncancel=(Button) rowview.findViewById(R.id.buttoncancelalarm);
+            holder.viewrecipe=(Button) rowview.findViewById(R.id.viewRecipe);
+            holder.viewrecipe.setTag(position);
             holder.buttoncancel.setTag(position);
             rowview.setTag(holder);
 
@@ -76,7 +82,12 @@ public class ScheduleAdapter extends BaseAdapter{
         holder.name.setText(arraySchedule.get(position).nameevent);
         holder.datetime.setText(arraySchedule.get(position).datetime);
         final int idCancel = arraySchedule.get(position).idevent;
+        final String curuser=arraySchedule.get(position).userkey;
+        final String curkey=arraySchedule.get(position).recipekey;
         Picasso.with(context).load(arraySchedule.get(position).imagecover).into(holder.coverSchedule);
+
+      // LoadData(curuser,curkey);
+
         final SQLite db = new SQLite(context,"Shopping.sqlite",null,1);
         holder.buttoncancel.setOnClickListener(new View.OnClickListener() {
 
@@ -110,9 +121,29 @@ public class ScheduleAdapter extends BaseAdapter{
                         .setNegativeButton(R.string.no, dialogClickListener).show();
             }
         });
-        //cancelNotification(idCancel);
+        holder.viewrecipe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+                mDatabase.child(curuser).child("Recipes").child(curkey).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        Recipe rp=dataSnapshot.getValue(Recipe.class);
+                        goViewRecipeScreen(rp,new UserKey(curuser,curkey));
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+            }
+        });
         return rowview;
     }
+
        private void cancelNotification(int id){
         AlarmManager alarmMgr = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent notificationIntent = new Intent(context, NotificationPublisher.class);
@@ -120,6 +151,12 @@ public class ScheduleAdapter extends BaseAdapter{
         notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, getNotification("cancel"));
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, id, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         alarmMgr.cancel(pendingIntent);
+    }
+    private void goViewRecipeScreen(Recipe currecipe,UserKey curuserkey) {
+        Intent intent = new Intent(context, ViewRecipeActivity.class);
+        intent.putExtra("TheRecipe",currecipe);
+        intent.putExtra("UserKey",curuserkey);
+        context.startActivity(intent);
     }
     private Notification getNotification(String content) {
         Notification.Builder builder = new Notification.Builder(context);

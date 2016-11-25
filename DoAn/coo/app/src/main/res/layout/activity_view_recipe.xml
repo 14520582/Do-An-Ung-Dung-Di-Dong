@@ -5,10 +5,6 @@
     android:id="@+id/activity_add_recipe"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.nghia.coo.AddRecipeActivity"
     android:orientation="vertical"
     android:background="@color/common_google_signin_btn_text_light_disabled">
@@ -19,9 +15,10 @@
         android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:id="@+id/linearlayoutView">
+            android:id="@+id/linearlayoutView"
+            android:focusableInTouchMode="true"
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:orientation="vertical"
@@ -31,8 +28,8 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical" >
+                    android:orientation="vertical"
+                    android:layout_height="220dp">
 
                     <ImageView
                         android:layout_width="match_parent"
@@ -40,12 +37,77 @@
 
                         android:id="@+id/coverRecipeView"
                         android:adjustViewBounds="true"
-                        android:scaleType="fitCenter" />
+                        android:scaleType="fitXY" />
 
+                    <Button
+                        android:text="@string/nonfollow"
+                        android:id="@+id/buttonAddFollow"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="false"
+                        android:layout_toRightOf="@+id/imageButtonAva"
+                        android:background="@drawable/custom_button_white"
+                        android:layout_marginLeft="3dp"
+                        android:paddingRight="5dp"
+                        android:layout_height="30dp"
+                        android:layout_width="120dp"
+                        android:textColor="@color/com_facebook_button_background_color_pressed"
+                        android:drawableLeft="@drawable/ic_add_follow" />
+                    <Button
+                        android:text="@string/follow"
+                        android:id="@+id/buttonFollowing"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="false"
+                        android:layout_toRightOf="@+id/imageButtonAva"
+                        android:background="@drawable/custom_button_2"
+                        android:layout_marginLeft="3dp"
+                        android:paddingRight="5dp"
+                        android:layout_height="30dp"
+                        android:layout_width="120dp"
+                        android:textColor="@color/colorWhite"
+                        android:drawableLeft="@drawable/ic_check_follow"
+                        android:visibility="invisible" />
 
+                    <ImageButton
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        app:srcCompat="@drawable/com_facebook_profile_picture_blank_square"
+                        android:id="@+id/imageButtonAva"
+                        android:scaleType="centerCrop"
+                        android:background="@android:color/transparent"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerInParent="false"
+                        android:layout_marginLeft="10dp" />
 
 
                 </RelativeLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:text="Button"
+                        android:layout_width="wrap_content"
+                        android:id="@+id/button3Name"
+                        android:background="@android:color/transparent"
+                        android:layout_height="30dp"
+                        android:textStyle="normal|bold"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center_vertical"
+                        android:paddingTop="5dp" />
+
+                    <TextView
+                        android:text="TextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:id="@+id/textViewDatePublish"
+                        android:layout_marginLeft="13dp"
+                        android:drawableLeft="@drawable/ic_time_publish"
+                        android:layout_marginTop="4dp"
+                        android:gravity="center_vertical"
+                        android:layout_weight="1" />
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -61,12 +123,16 @@
                     android:textColor="?android:attr/colorFocusedHighlight"
                     android:textColorHint="@color/com_facebook_button_background_color_disabled"
                     android:paddingBottom="5dp"
-                    android:paddingTop="5dp" />
+                    android:paddingTop="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp" />
 
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp">
 
                     <ImageView
                         app:srcCompat="@drawable/ic_alert_name"
@@ -123,7 +189,9 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp">
 
                     <Button
                         android:layout_width="40dp"
@@ -133,8 +201,20 @@
                         android:textSize="10sp"
                         android:layout_alignBottom="@+id/textViewView"
                         android:layout_alignParentTop="true"
-                        android:drawableLeft="@drawable/ic_shopping_button"
-                        android:background="@android:color/transparent" />
+                        android:background="@android:color/transparent"
+                        android:drawableLeft="@drawable/ic_add_shopping" />
+
+                    <Button
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/buttonPlannerRecipe"
+                        android:background="@android:color/transparent"
+                        android:textSize="10sp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="43dp"
+                        android:layout_alignBottom="@+id/textViewView"
+                        android:layout_alignParentTop="true"
+                        android:drawableLeft="@drawable/ic_planner_recipe" />
 
                     <TextView
                         android:text="@string/material"
@@ -156,7 +236,9 @@
                     android:textAlignment="center"
                     android:textSize="16sp"
                     android:paddingBottom="10dp"
-                    android:paddingTop="10dp" />
+                    android:paddingTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp" />
 
                 <TextView
                     android:text="@string/addrecipe"
@@ -164,7 +246,9 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/textViewView6"
                     android:textSize="25sp"
-                    android:textStyle="normal|bold" />
+                    android:textStyle="normal|bold"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp" />
 
 
 
@@ -175,7 +259,18 @@
                 android:layout_width="match_parent"
                 android:id="@+id/listViewImplement"
                 android:layout_weight="1"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                app:srcCompat="@drawable/footer"
+                android:id="@+id/imageView5"
+                android:scaleType="centerCrop"
+                android:layout_marginTop="5dp"
+                android:layout_gravity="bottom"
+                android:layout_height="80dp" />
 
 
         </LinearLayout>

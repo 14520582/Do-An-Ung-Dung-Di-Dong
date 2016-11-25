@@ -1,5 +1,6 @@
 package com.example.nghia.coo;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -33,6 +35,7 @@ import com.squareup.picasso.Picasso;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -63,48 +66,69 @@ public class AddRecipeActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if(!isEmpty())
-                {
-                    Calendar calendar= Calendar.getInstance();
-                    StorageReference mountainsRef = storageRef.child("cover"+calendar.getTimeInMillis()+".png");
-                    cover.setDrawingCacheEnabled(true);
-                    cover.buildDrawingCache();
-                    Bitmap bitmap = cover.getDrawingCache();
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-                    byte[] data = baos.toByteArray();
+                {DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case DialogInterface.BUTTON_POSITIVE:
+                                Calendar calendar= Calendar.getInstance();
+                                StorageReference mountainsRef = storageRef.child("cover"+calendar.getTimeInMillis()+".png");
+                                cover.setDrawingCacheEnabled(true);
+                                cover.buildDrawingCache();
+                                Bitmap bitmap = cover.getDrawingCache();
+                                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                                bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                                byte[] data = baos.toByteArray();
 
-                    UploadTask uploadTask = mountainsRef.putBytes(data);
-                    uploadTask.addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception exception) {
-                            // Handle unsuccessful uploads
-                        }
-                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
-                            Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                            Toast.makeText(AddRecipeActivity.this, getString(R.string.login_success), Toast.LENGTH_LONG).show();
-                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                            Recipe rp=new Recipe();
-                            rp.time=editTextTime.getText().toString();
-                            rp.ration=editTextRation.getText().toString();
-                            rp.material=editTextMaterial.getText().toString();
-                            rp.namerecipe=editTextName.getText().toString();
-                            rp.image=String.valueOf(downloadUrl);
-                            getStringfromLayout(rp.implement);
-                            mDatabase.child(user.getUid().toString()).child("Recipes").push().setValue(rp, new DatabaseReference.CompletionListener(){
-                                @Override
-                                public void onComplete (DatabaseError databaseError, DatabaseReference databaseReference){
-                                    if(databaseError==null)
-                                    {
-                                        Toast.makeText(AddRecipeActivity.this, getString(R.string.login_success), Toast.LENGTH_LONG).show();
-                                        goMainScreen();
+                                UploadTask uploadTask = mountainsRef.putBytes(data);
+                                uploadTask.addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception exception) {
+                                        // Handle unsuccessful uploads
                                     }
-                                }
-                            });
+                                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                    @Override
+                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                        // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                                        Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                        Recipe rp=new Recipe();
+                                        rp.time=editTextTime.getText().toString();
+                                        rp.ration=editTextRation.getText().toString();
+                                        rp.material=editTextMaterial.getText().toString();
+                                        rp.namerecipe=editTextName.getText().toString();
+                                        rp.image=String.valueOf(downloadUrl);
+                                        rp.cal=new Date();
+                                        rp.userid=user.getUid();
+                                        rp.like=0;
+                                        getStringfromLayout(rp.implement);
+                                        mDatabase.child("Recipes").push().setValue(rp, new DatabaseReference.CompletionListener(){
+                                            @Override
+                                            public void onComplete (DatabaseError databaseError, DatabaseReference databaseReference){
+                                                if(databaseError==null)
+                                                {
+                                                    Toast.makeText(AddRecipeActivity.this,getString(R.string.uploadsucess),Toast.LENGTH_SHORT).show();
+                                                    goMainScreen();
+                                                }
+                                            }
+                                        });
+                                    }
+                                });
+                                break;
+
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                //No button clicked
+                                break;
                         }
-                    });
+
+
+                    }
+                };
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(AddRecipeActivity.this);
+                    builder.setMessage(getString(R.string.confirmupload)).setPositiveButton(R.string.yes, dialogClickListener)
+                            .setNegativeButton(R.string.no, dialogClickListener).show();
+
 
 
                 }

@@ -1,23 +1,69 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.nghia.coo.RecipeFragment">
+    tools:context="com.example.nghia.coo.RecipeFragment"
+    android:orientation="vertical">
 
     <!-- TODO: Update blank fragment layout -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="51dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/lineaView"
+            android:focusableInTouchMode="true">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_weight="0"
+        android:layout_height="130dp">
 
-    <SearchView
-        android:id="@+id/searchView"
+        <ImageView
+            android:layout_width="match_parent"
+            app:srcCompat="@drawable/background_material_red"
+            android:id="@+id/imageView3"
+            android:layout_weight="0"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:srcCompat="@drawable/com_facebook_profile_picture_blank_square"
+            android:id="@+id/imageViewUser"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentEnd="false"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="false"
+            android:layout_centerHorizontal="false"
+            android:layout_alignParentBottom="true" />
+    </RelativeLayout>
+
+    <TextView
+        android:text="TextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:queryHint="@string/search_hint"
-        android:layout_marginTop="@android:dimen/app_icon_size"
-        android:iconifiedByDefault="false" />
+        android:id="@+id/textViewUser"
+        android:layout_weight="0"
+        android:gravity="center_horizontal"
+        android:textStyle="normal|bold"
+        android:textSize="18sp"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp" />
 
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="95dp"
-        android:id="@+id/listView" />
+        android:layout_height="wrap_content"
+        android:id="@+id/listView"
+        android:layout_weight="1"
+        android:dividerHeight="5dp" />
+        </LinearLayout>
+
+
+    </ScrollView>
 
 </RelativeLayout>

@@ -14,7 +14,14 @@ public class ShoppingObject {
     public ArrayList<String> listimplement = new ArrayList<String>();
     public ShoppingObject() {
     }
+    public ShoppingObject(int ID, String name, String ration, ArrayList<String> listimplementt) {
+        Name = name;
+        id=ID;
+        Ration = ration;
 
+        listimplement=listimplementt;
+
+    }
     public ShoppingObject(int ID, String name, String ration, String convert) {
         Name = name;
         id=ID;
@@ -27,12 +34,8 @@ public class ShoppingObject {
         }
         scanner.close();
         listimplement=tem;
+
     }
 
- /*   public ShoppingObject(int ID,String name, String ration, ArrayList<String> listimplement) {
-        Name = name;
-        id=ID;
-        this.listimplement = listimplement;
-        Ration = ration;
-    }*/
+
 }

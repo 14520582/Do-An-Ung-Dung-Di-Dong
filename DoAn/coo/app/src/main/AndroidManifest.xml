@@ -33,8 +33,23 @@
         <activity
             android:name=".AddRecipeActivity"
             android:label="@string/upload" />
-        <activity android:name=".ViewRecipeActivity"
-            android:label="@string/titilerecipe" ></activity>
+        <activity
+            android:name=".ViewRecipeActivity"
+            android:label="@string/titilerecipe" />
+        <activity
+            android:name=".SetScheduleActivity"
+            android:label="@string/setplanner" />
+
+        <receiver android:name=".NotificationPublisher" />
+
+        <activity android:name=".AnotherWallActivity"
+            android:label="@string/another"
+
+            />
+
+        <activity android:name=".UserWallActivity"
+            android:label="@string/recipe"
+            ></activity>
     </application>
 
 </manifest>
