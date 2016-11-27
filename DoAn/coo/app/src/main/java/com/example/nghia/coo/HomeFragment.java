@@ -15,7 +15,7 @@ import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,8 +28,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-import pl.droidsonroids.gif.GifImageView;
-
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -39,8 +37,6 @@ public class HomeFragment extends Fragment {
     private DatabaseReference mDatabase;
     private ListView listview;
     ImageView imagebutton;
-    GifImageView gif;
-    RelativeLayout layout;
     ArrayList<UserKey> listUserKey =new ArrayList<UserKey>();
     ArrayList<Recipe> listrecipe=new ArrayList<Recipe>();
     ArrayList<String> listname=new ArrayList<String>();
@@ -48,7 +44,7 @@ public class HomeFragment extends Fragment {
     ArrayList<String> listimage=new ArrayList<String>();
     ArrayList<Boolean> listtruefalse=new ArrayList<Boolean>();
     RecipeAdapter rpAdapter=null;
-    public boolean isFirst;
+
 
     public HomeFragment () {
 
@@ -63,18 +59,10 @@ public class HomeFragment extends Fragment {
         setHasOptionsMenu(true);
         view = inflater.inflate(R.layout.fragment_home, container, false);
         ((MainActivity) getActivity()).setActionBarTitle(getString(R.string.home));
-        Bundle args = getArguments();
-        isFirst=args.getBoolean("isFirst");
+
 
         Mapping();
-        if(isFirst)
-            listview.setVisibility(View.GONE);
-        else
-        {
 
-            layout.setVisibility(View.GONE);
-            listview.setVisibility(View.VISIBLE);
-        }
         mDatabase = FirebaseDatabase.getInstance().getReference();
         imagebutton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,7 +108,29 @@ public class HomeFragment extends Fragment {
         mDatabase.child("Recipes").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Recipe rp= dataSnapshot.getValue(Recipe.class);
+                // Iterator iterator=dataSnapshot.
+
+              //  Iterator iterator=dataSnapshot.getChildren().iterator();
+                //((DataSnapshot)iterator.next()).ge
+             /*   while (iterator.hasNext()){
+                    Recipe rp =new Recipe();
+                    rp.cal=((DataSnapshot)iterator.next()).getValue(Date.class);
+                    rp.countcomment=((DataSnapshot)iterator.next()).getValue(Integer.class);
+                    rp.image=((DataSnapshot)iterator.next()).getValue().toString();
+                    rp.implement=(ArrayList<String>)((DataSnapshot)iterator.next()).getValue();
+                    rp.like=((DataSnapshot)iterator.next()).getValue(Integer.class);
+                    rp.material=((DataSnapshot)iterator.next()).getValue().toString();
+                    rp.namerecipe=((DataSnapshot)iterator.next()).getValue().toString();
+                    rp.ration=((DataSnapshot)iterator.next()).getValue().toString();
+                    rp.time=((DataSnapshot)iterator.next()).getValue().toString();
+                    rp.userid=((DataSnapshot)iterator.next()).getValue().toString();
+                   // Toast.makeText(getActivity(),((DataSnapshot)iterator.next()).getValue().toString(),Toast.LENGTH_SHORT).show();
+                  //  Toast.makeText(getActivity(),((DataSnapshot)iterator.next()).getValue().toString(),Toast.LENGTH_SHORT).show();
+                    listrecipe.add(0,rp);
+                  //  Toast.makeText(getActivity(),listrecipe.get(0).namerecipe,Toast.LENGTH_SHORT).show();
+
+                }*/
+               Recipe rp= dataSnapshot.getValue(Recipe.class);
                 listrecipe.add(0,rp);
                 UserKey tm=new UserKey(rp.userid,dataSnapshot.getKey());
 
@@ -130,12 +140,13 @@ public class HomeFragment extends Fragment {
                 listUserKey.add(0,tm);
                 listname.add(0,"");
                 listimage.add(0,"");
-              //  Toast.makeText(getActivity(), tm.user,Toast.LENGTH_SHORT).show();
+
+               // Toast.makeText(getActivity(), rp.namerecipe,Toast.LENGTH_SHORT).show();
               //  Toast.makeText(getActivity(),dataSnapshot.getKey(),Toast.LENGTH_SHORT).show();
                 LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(GridLayout.LayoutParams.MATCH_PARENT, 825*listrecipe.size());
 
                 listview.setLayoutParams(lparams);
-                LoadImage(tm.user);
+              //  LoadImage(tm.user);
 
                 mDatabase1.child("User").child(user.getUid()).child("Liked").addChildEventListener(new ChildEventListener() {
                     @Override
@@ -144,10 +155,11 @@ public class HomeFragment extends Fragment {
 
                         if(rec.equals(dataSnapshot.getValue().toString())) {
                             listtruefalse.set(listrecipe.size()-pos, Boolean.TRUE);
-                            //  Toast.makeText(getActivity(),dataSnapshot.getValue().toString(),Toast.LENGTH_SHORT).show();
+                           // Toast.makeText(getActivity(),"true",Toast.LENGTH_SHORT).show();
                             // listtruefalse.remove(listtruefalse.size()-1);
+                           // rpAdapter.notifyDataSetChanged();
                             mDatabase1.removeEventListener(this);
-                            rpAdapter.notifyDataSetChanged();
+
                         }
 
                         // Toast.makeText(getActivity(),listtruefalse.size()+"",Toast.LENGTH_SHORT).show();
@@ -174,16 +186,16 @@ public class HomeFragment extends Fragment {
 
                     }
                 });
-            /*    mDatabase1.child("User").child(tm.user).child("Name").addValueEventListener(new ValueEventListener() {
+                mDatabase1.child("User").child(tm.user).child("Name").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        listname.add(0,dataSnapshot.getValue().toString());
+                        listname.set(listrecipe.size()-pos,dataSnapshot.getValue().toString());
                       //  Toast.makeText(getActivity(),t,Toast.LENGTH_SHORT).show();
-                        listname.remove(listname.size()-1);
+                      //  listname.remove(listname.size()-1);
 
-                        rpAdapter.notifyDataSetChanged();
+                      //  rpAdapter.notifyDataSetChanged();
 
-                        // Toast.makeText(getActivity(),dataSnapshot.getValue().toString(),Toast.LENGTH_SHORT).show();
+                      //   Toast.makeText(getActivity(),dataSnapshot.getValue().toString(),Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -194,22 +206,22 @@ public class HomeFragment extends Fragment {
                 mDatabase1.child("User").child(tm.user).child("Image").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        listimage.add(0,dataSnapshot.getValue().toString());
+                        listimage.set(listrecipe.size()-pos,dataSnapshot.getValue().toString());
 
-                        listimage.remove(listimage.size()-1);
+                      //  listimage.remove(listimage.size()-1);
                         rpAdapter.notifyDataSetChanged();
 
-                        // Toast.makeText(getActivity(),dataSnapshot.getValue().toString(),Toast.LENGTH_SHORT).show();
+                       //  Toast.makeText(getActivity(),dataSnapshot.getValue().toString(),Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
 
                     }
-                });*/
+                });
 
 
-                rpAdapter.notifyDataSetChanged();
+
 
             }
 
@@ -247,11 +259,10 @@ public class HomeFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 listname.add(0,dataSnapshot.getValue().toString());
                 //  Toast.makeText(getActivity(),dataSnapshot.getValue().toString(),Toast.LENGTH_SHORT).show();
-                listname.remove(listname.size()-1);
+               // listname.remove(listname.size()-1);
 
-                rpAdapter.notifyDataSetChanged();
 
-                // Toast.makeText(getActivity(),dataSnapshot.getValue().toString(),Toast.LENGTH_SHORT).show();
+                 Toast.makeText(getActivity(),dataSnapshot.getValue().toString(),Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -264,10 +275,10 @@ public class HomeFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 listimage.add(0,dataSnapshot.getValue().toString());
 
-                listimage.remove(listimage.size()-1);
-                rpAdapter.notifyDataSetChanged();
+               // listimage.remove(listimage.size()-1);
+              //  rpAdapter.notifyDataSetChanged();
 
-                // Toast.makeText(getActivity(),dataSnapshot.getValue().toString(),Toast.LENGTH_SHORT).show();
+                 Toast.makeText(getActivity(),dataSnapshot.getValue().toString(),Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -279,10 +290,9 @@ public class HomeFragment extends Fragment {
     }
     private void Mapping(){
         listview=(ListView) view.findViewById(R.id.listViewHome);
-        layout=(RelativeLayout) view.findViewById(R.id.invisible);
 
-      //  searchview=(Button) view.findViewById(R.id.ref);
-        gif=(GifImageView) view.findViewById(R.id.gif);
+
+
 
         addRecipe=(Button) view.findViewById(R.id.buttonAddRecipe);
         imagebutton=(ImageView) view.findViewById(R.id.imageViewButton);

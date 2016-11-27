@@ -71,7 +71,7 @@ public class FollowAdapter extends BaseAdapter {
             rowview=inflater.inflate(mLayout,null);
             holder.buttonremove=(Button) rowview.findViewById(R.id.buttonunfollow);
             holder.buttonname=(Button) rowview.findViewById(R.id.buttonNameFollow);
-            holder.avatar=(CircleImageView) rowview.findViewById(R.id.user_following);
+            holder.avatar=(CircleImageView) rowview.findViewById(R.id.user_comment);
             rowview.setTag(holder);
         }else{
             holder = (ViewHolder) rowview.getTag();

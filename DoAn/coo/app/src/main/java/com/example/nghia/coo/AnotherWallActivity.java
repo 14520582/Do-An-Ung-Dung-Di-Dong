@@ -23,6 +23,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class AnotherWallActivity extends AppCompatActivity {
     ArrayList<String> listimage=new ArrayList<String>();
     ArrayList<Boolean> listtruefalse=new ArrayList<Boolean>();
     RecipeAdapter rpAdapter=null;
-    ImageView avatar;
+    ImageView avatar,back;
     TextView nameuser;
     Button addfollow,following;
     String curName,curAvatar,curUser;
@@ -56,6 +57,7 @@ public class AnotherWallActivity extends AppCompatActivity {
         nameuser.setText(curName);
         rpAdapter = new RecipeAdapter(this,R.layout.introrecipe,listrecipe,listUserKey,listname,listimage,listtruefalse);
         LoadData();
+        LoadBackground();
         addfollow.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -112,12 +114,28 @@ public class AnotherWallActivity extends AppCompatActivity {
             }
         });
     }
+    private void LoadBackground(){
+        mDatabase.child("User").child(curUser).child("Cover").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if(dataSnapshot.exists())
+                Picasso.with(AnotherWallActivity.this).load(dataSnapshot.getValue().toString()).into(back);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
     private void Mapping(){
         listview=(ListView) findViewById(R.id.listViewAnother);
         addfollow=(Button) findViewById(R.id.button3Nonfollowing);
         following=(Button) findViewById(R.id.button4Following);
         avatar=(ImageView) findViewById(R.id.imageViewAnotherUser);
         nameuser=(TextView) findViewById(R.id.textViewAnotherUser);
+        back=(ImageView) findViewById(R.id.imageAnotherBack);
         //  searchview=(SearchView) view.findViewById(R.id.searchView);
     }
     private void LoadData(){
@@ -128,7 +146,7 @@ public class AnotherWallActivity extends AppCompatActivity {
                 Recipe rp= dataSnapshot.getValue(Recipe.class);
                 UserKey tm=new UserKey(curUser,dataSnapshot.getKey());
                //  Toast.makeText(AnotherWallActivity.this, rp.namerecipe.toString(), Toast.LENGTH_LONG).show();
-                listrecipe.add(0,new Recipe(rp.namerecipe,rp.image,rp.material,rp.time,rp.ration,rp.implement,rp.cal,rp.userid,rp.like));
+                listrecipe.add(0,new Recipe(rp.namerecipe,rp.image,rp.material,rp.time,rp.ration,rp.implement,rp.cal,rp.userid,rp.like,rp.countcomment));
                 final String rec=dataSnapshot.getKey();
                 final int pos=listrecipe.size();
                 listtruefalse.add(0,Boolean.FALSE);

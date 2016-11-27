@@ -71,7 +71,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which){
                             case DialogInterface.BUTTON_POSITIVE:
-                                Calendar calendar= Calendar.getInstance();
+                                final Calendar calendar= Calendar.getInstance();
                                 StorageReference mountainsRef = storageRef.child("cover"+calendar.getTimeInMillis()+".png");
                                 cover.setDrawingCacheEnabled(true);
                                 cover.buildDrawingCache();
@@ -99,8 +99,10 @@ public class AddRecipeActivity extends AppCompatActivity {
                                         rp.namerecipe=editTextName.getText().toString();
                                         rp.image=String.valueOf(downloadUrl);
                                         rp.cal=new Date();
+                                        rp.cal.setTime(calendar.getTimeInMillis());
                                         rp.userid=user.getUid();
                                         rp.like=0;
+                                        rp.countcomment=0;
                                         getStringfromLayout(rp.implement);
                                         mDatabase.child("Recipes").push().setValue(rp, new DatabaseReference.CompletionListener(){
                                             @Override

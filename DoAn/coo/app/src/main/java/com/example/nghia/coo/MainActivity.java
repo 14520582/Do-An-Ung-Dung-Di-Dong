@@ -84,9 +84,7 @@ public class MainActivity extends AppCompatActivity
 
         //setContentView(R.layout.activity_main);
         HomeFragment fragment = new HomeFragment();
-        Bundle first=new Bundle();
-        first.putBoolean("isFirst",true);
-        fragment.setArguments(first);
+
         android.support.v4.app.FragmentTransaction fragmentTransaction =
                 getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment);
@@ -161,9 +159,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+     //   if (id == R.id.action_settings) {
+       //     return true;
+        //}
 
         return super.onOptionsItemSelected(item);
     }
@@ -177,9 +175,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_home) {
 
             HomeFragment fragment = new HomeFragment();
-            Bundle first=new Bundle();
-            first.putBoolean("isFirst",false);
-            fragment.setArguments(first);
+
             android.support.v4.app.FragmentTransaction fragmentTransaction =
                     getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, fragment);

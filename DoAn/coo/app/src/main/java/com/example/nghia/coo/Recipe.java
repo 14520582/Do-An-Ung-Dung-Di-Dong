@@ -13,11 +13,12 @@ public class Recipe implements Serializable {
     public Date cal;
     public String userid;
     public int like;
+    public int countcomment;
     public ArrayList<String> implement=new ArrayList<String>();
     public Recipe(){
 
     }
-    public Recipe(String Namerecipe, String Image, String Material, String Time, String Ration, ArrayList<String> Recipes,Date Cal,String Userid,int curLike){
+    public Recipe(String Namerecipe, String Image, String Material, String Time, String Ration, ArrayList<String> Recipes,Date Cal,String Userid,int curLike,int cm){
         namerecipe=Namerecipe;
         image=Image;
         material=Material;
@@ -27,6 +28,7 @@ public class Recipe implements Serializable {
         cal=Cal;
         userid=Userid;
         like=curLike;
+        countcomment=cm;
 
     }
 }

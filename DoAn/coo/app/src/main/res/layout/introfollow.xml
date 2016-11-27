@@ -12,7 +12,7 @@
         android:layout_marginBottom="5dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/user_following"
+            android:id="@+id/user_comment"
             app:border_color="#FF000000"
             android:layout_marginLeft="5dp"
             android:layout_alignParentLeft="true"
@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:id="@+id/buttonNameFollow"
-            android:layout_toRightOf="@+id/user_following"
+            android:layout_toRightOf="@+id/user_comment"
             android:layout_marginLeft="3dp"
             android:background="@android:color/transparent"
             android:gravity="center_vertical"

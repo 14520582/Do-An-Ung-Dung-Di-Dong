@@ -25,7 +25,7 @@
         <ImageView
             android:layout_width="match_parent"
             app:srcCompat="@drawable/background_material_red"
-            android:id="@+id/imageView3"
+            android:id="@+id/imageBackground1"
             android:layout_weight="0"
             android:layout_height="100dp"
             android:scaleType="centerCrop" />
@@ -40,7 +40,26 @@
             android:layout_centerInParent="true"
             android:layout_centerVertical="false"
             android:layout_centerHorizontal="false"
-            android:layout_alignParentBottom="true" />
+            android:layout_alignParentBottom="true"
+            />
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@android:drawable/ic_menu_edit"
+            android:id="@+id/imageButtonEdit1"
+            android:background="@android:color/transparent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@android:drawable/ic_menu_save"
+            android:id="@+id/imageButtonSave1"
+            android:background="@android:color/transparent"
+            android:layout_below="@+id/imageButtonEdit1"
+            android:layout_alignParentRight="true"
+            android:visibility="invisible" />
     </RelativeLayout>
 
     <TextView

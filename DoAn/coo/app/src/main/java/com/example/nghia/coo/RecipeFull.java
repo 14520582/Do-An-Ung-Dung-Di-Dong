@@ -19,6 +19,7 @@ public class RecipeFull {
         this.curname = curname;
         this.curimage = curimage;
         this.curBoolean=curboolean;
+
     }
 
     public RecipeFull() {

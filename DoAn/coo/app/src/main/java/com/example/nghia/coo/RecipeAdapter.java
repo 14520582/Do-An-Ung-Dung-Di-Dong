@@ -80,7 +80,7 @@ public class RecipeAdapter extends BaseAdapter implements Filterable {
     }
     private class ViewHolder {
         ImageView cover;
-        TextView name,time,ration,date,textlike;
+        TextView name,time,ration,date,textlike,textcomment;
         Button buttonView,buttonname,buttonboth,buttonlike,buttonunlike,buttoncomment1,buttoncomment2;
         ImageButton avatar;
 
@@ -98,6 +98,7 @@ public class RecipeAdapter extends BaseAdapter implements Filterable {
             holder.name=(TextView) rowview.findViewById(R.id.name);
             holder.ration=(TextView) rowview.findViewById(R.id.Ration);
             holder.time=(TextView) rowview.findViewById(R.id.Time);
+            holder.textcomment=(TextView) rowview.findViewById(R.id.textViewCountComment);
             holder.buttonView=(Button) rowview.findViewById(R.id.buttonView);
             holder.buttonname=(Button) rowview.findViewById(R.id.buttonName);
             holder.buttonlike=(Button) rowview.findViewById(R.id.buttonLike);
@@ -126,13 +127,14 @@ public class RecipeAdapter extends BaseAdapter implements Filterable {
         final  String image=arrayRecipe.get(position).image;
         final String material=arrayRecipe.get(position).material;
         final String time=arrayRecipe.get(position).time;
+
         final String ration=arrayRecipe.get(position).ration;
         final String user = arrayUserKey.get(position).user;
         final String key = arrayUserKey.get(position).key;
         final String imageUser=arrayImage.get(position);
         final Date cal=arrayRecipe.get(position).cal;
         final int like=arrayRecipe.get(position).like;
-
+        final int cm =arrayRecipe.get(position).countcomment;
         final ArrayList<String> imp =new ArrayList<String>(arrayRecipe.get(position).implement);
 
         if(like==0){
@@ -142,6 +144,24 @@ public class RecipeAdapter extends BaseAdapter implements Filterable {
             holder.textlike.setVisibility(View.VISIBLE);
             holder.textlike.setText(like+"");
         }
+        if(cm==0){
+            holder.textcomment.setVisibility(View.INVISIBLE);
+        }else
+        {
+            holder.textcomment.setVisibility(View.VISIBLE);
+            if(cm>1)
+            holder.textcomment.setText(cm+" comments");
+            else
+                holder.textcomment.setText(cm+" comment");
+        }
+        holder.buttoncomment2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goCommentScreen(key);
+               // Toast.makeText(context,key,Toast.LENGTH_SHORT).show();
+
+            }
+        });
         Picasso.with(context).load(arrayRecipe.get(position).image).into(holder.cover);
         if(arrayImage.get(position).length()!=0) {
             Picasso.with(context).load(arrayImage.get(pos)).into(holder.avatar);
@@ -153,7 +173,7 @@ public class RecipeAdapter extends BaseAdapter implements Filterable {
 
             @Override
             public void onClick(View v) {
-                curRecipe = new Recipe(name,image,material,time,ration,imp,cal,user,like);
+                curRecipe = new Recipe(name,image,material,time,ration,imp,cal,user,like,cm);
                 curUserKey=new UserKey(user,key);
 
                 goViewRecipeScreen(curRecipe,curUserKey);
@@ -272,6 +292,13 @@ public class RecipeAdapter extends BaseAdapter implements Filterable {
         this.notifyDataSetChanged();
 
     }
+    private void goCommentScreen(String key){
+        Intent intent = new Intent(context, CommentActivity.class);
+
+        intent.putExtra("Key",key);
+        //  intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
     private void setCountUnLike(String recipe,int po){
         final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         final String recipe1=recipe;
@@ -332,6 +359,7 @@ public class RecipeAdapter extends BaseAdapter implements Filterable {
                 ArrayList<String> FilteredArrList2 = new ArrayList<String>();
                 ArrayList<String> FilteredArrList3 = new ArrayList<String>();
                 ArrayList<Boolean> FilteredArrList6 = new ArrayList<Boolean>();
+
                 //RecipeFull FilteredArrList4;
                 if (arrayRecipeSource == null) {
                     arrayRecipeSource=new ArrayList<Recipe>(arrayRecipe);
@@ -348,11 +376,12 @@ public class RecipeAdapter extends BaseAdapter implements Filterable {
                     for (int i = 0; i < arrayRecipeSource.size(); i++) {
                         String data = arrayRecipeSource.get(i).namerecipe;
                         if (data.toLowerCase().startsWith(constraint.toString())) {
-                            FilteredArrList.add(new Recipe(arrayRecipeSource.get(i).namerecipe,arrayRecipeSource.get(i).image,arrayRecipeSource.get(i).material,arrayRecipeSource.get(i).time,arrayRecipeSource.get(i).ration,arrayRecipeSource.get(i).implement,arrayRecipeSource.get(i).cal,arrayRecipeSource.get(i).userid,arrayRecipeSource.get(i).like));
+                            FilteredArrList.add(new Recipe(arrayRecipeSource.get(i).namerecipe,arrayRecipeSource.get(i).image,arrayRecipeSource.get(i).material,arrayRecipeSource.get(i).time,arrayRecipeSource.get(i).ration,arrayRecipeSource.get(i).implement,arrayRecipeSource.get(i).cal,arrayRecipeSource.get(i).userid,arrayRecipeSource.get(i).like,arrayRecipeSource.get(i).countcomment));
                             FilteredArrList1.add(new UserKey(arrayUserKeySource.get(i).user,arrayUserKeySource.get(i).key));
                             FilteredArrList2.add(arrayNameSource.get(i));
                             FilteredArrList3.add(arrayImageSource.get(i));
                             FilteredArrList6.add(arrayTrueFalseSource.get(i));
+
                         }
                     }
                     // set the Filtered result to return

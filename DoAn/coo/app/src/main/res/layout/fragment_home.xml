@@ -53,54 +53,13 @@
 
             </RelativeLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="600dp"
-                android:id="@+id/invisible">
-
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="500dp"
-                    app:srcCompat="@drawable/bt"
-                    android:id="@+id/imageView6"
-                    android:scaleType="fitXY" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView10"
-                    android:textColor="@color/colorWhite"
-                    android:textStyle="normal|bold"
-                    android:textSize="24sp"
-                    android:layout_centerHorizontal="false"
-                    android:layout_centerInParent="true"
-                    android:text="Ẩm thực là cuộc sống"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:layout_centerVertical="false"
-                    android:paddingBottom="176dp" />
-
-                <pl.droidsonroids.gif.GifImageView
-                    android:layout_width="100dp"
-                    android:src="@drawable/arrow"
-                    android:background="@android:color/transparent"
-                    android:id="@+id/gif"
-                    android:scaleType="fitCenter"
-                    android:layout_alignParentBottom="false"
-                    android:layout_alignParentLeft="false"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerInParent="false"
-                    android:layout_marginTop="5dp"
-                    android:layout_height="80dp"
-                    android:layout_alignParentRight="true" />
-            </RelativeLayout>
-
             <ListView
                 android:layout_width="match_parent"
                 android:id="@+id/listViewHome"
                 android:dividerHeight="10dp"
                 android:layout_height="match_parent"
-                android:layout_marginTop="30dp" />
+                android:visibility="visible"
+                android:paddingTop="15dp" />
 
         </LinearLayout>
     </ScrollView>
