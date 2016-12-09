@@ -125,7 +125,7 @@ public class ScheduleAdapter extends BaseAdapter{
             @Override
             public void onClick(View v) {
                 DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-                mDatabase.child(curuser).child("Recipes").child(curkey).addValueEventListener(new ValueEventListener() {
+                mDatabase.child("Recipes").child(curkey).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
