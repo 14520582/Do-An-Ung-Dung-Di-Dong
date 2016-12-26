@@ -4,6 +4,8 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,7 +14,6 @@ import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,14 +30,14 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class AnotherWallActivity extends AppCompatActivity {
-    private ListView listview;
+    private RecyclerView listview;
     private DatabaseReference mDatabase;
     ArrayList<Recipe> listrecipe=new ArrayList<Recipe>();
     ArrayList<UserKey> listUserKey=new ArrayList<UserKey>();
     ArrayList<String> listname=new ArrayList<String>();
     ArrayList<String> listimage=new ArrayList<String>();
     ArrayList<Boolean> listtruefalse=new ArrayList<Boolean>();
-    RecipeAdapter rpAdapter=null;
+    HomeReAdapter rpAdapter=null;
     ImageView avatar,back;
     TextView nameuser;
     Button addfollow,following;
@@ -55,7 +56,8 @@ public class AnotherWallActivity extends AppCompatActivity {
         Mapping();
         Picasso.with(this).load(curAvatar).into(avatar);
         nameuser.setText(curName);
-        rpAdapter = new RecipeAdapter(this,R.layout.introrecipe,listrecipe,listUserKey,listname,listimage,listtruefalse);
+        listview.setLayoutManager(new LinearLayoutManager(this));
+        rpAdapter = new HomeReAdapter(listrecipe,listUserKey,listname,listimage,listtruefalse);
         LoadData();
         LoadBackground();
         addfollow.setOnClickListener(new View.OnClickListener() {
@@ -78,6 +80,7 @@ public class AnotherWallActivity extends AppCompatActivity {
         });
       //  Toast.makeText(AnotherWallActivity.this, curUser, Toast.LENGTH_LONG).show();
         listview.setAdapter(rpAdapter);
+        listview.addItemDecoration(new ItemDivider(this));
     }
     private void LoadFollow(){
         final DatabaseReference mDatabase2 = FirebaseDatabase.getInstance().getReference();
@@ -130,7 +133,7 @@ public class AnotherWallActivity extends AppCompatActivity {
         });
     }
     private void Mapping(){
-        listview=(ListView) findViewById(R.id.listViewAnother);
+        listview=(RecyclerView) findViewById(R.id.listViewAnother);
         addfollow=(Button) findViewById(R.id.button3Nonfollowing);
         following=(Button) findViewById(R.id.button4Following);
         avatar=(ImageView) findViewById(R.id.imageViewAnotherUser);

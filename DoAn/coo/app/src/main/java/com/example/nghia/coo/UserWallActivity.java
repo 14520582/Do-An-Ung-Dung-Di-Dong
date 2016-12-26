@@ -8,6 +8,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,7 +18,6 @@ import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,7 +41,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 public class UserWallActivity extends AppCompatActivity {
-    private ListView listview;
+    private RecyclerView listview;
     ImageView img;
     private static int RESULT_LOAD_IMAGE = 1;
     private DatabaseReference mDatabase;
@@ -49,7 +50,7 @@ public class UserWallActivity extends AppCompatActivity {
     ArrayList<String> listname=new ArrayList<String>();
     ArrayList<String> listimage=new ArrayList<String>();
     ArrayList<Boolean> listtruefalse=new ArrayList<Boolean>();
-    RecipeAdapterUser rpAdapter=null;
+    MyRecipeAdapter rpAdapter=null;
     ImageView avatar;
     ImageButton buttonedit,save;
     TextView nameuser;
@@ -66,10 +67,12 @@ public class UserWallActivity extends AppCompatActivity {
         nameprofile=user.getDisplayName();
         Picasso.with(this).load(photoUrl).into(avatar);
         nameuser.setText(nameprofile);
-        rpAdapter = new RecipeAdapterUser(this,R.layout.introrecipeuser,listrecipe,listUserKey,listname,listimage,listtruefalse);
+        listview.setLayoutManager(new LinearLayoutManager(this));
+        rpAdapter = new MyRecipeAdapter(listrecipe,listUserKey,listname,listimage,listtruefalse);
         LoadData();
 
         listview.setAdapter(rpAdapter);
+        listview.addItemDecoration(new ItemDivider(this));
         buttonedit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
@@ -113,7 +116,7 @@ public class UserWallActivity extends AppCompatActivity {
         });
     }
     private void Mapping(){
-        listview=(ListView) findViewById(R.id.listViewWallUser);
+        listview=(RecyclerView) findViewById(R.id.listViewWallUser);
         avatar=(ImageView) findViewById(R.id.imageViewWallUser);
         nameuser=(TextView) findViewById(R.id.textViewWallUser);
         img=(ImageView) findViewById(R.id.imageBackground);

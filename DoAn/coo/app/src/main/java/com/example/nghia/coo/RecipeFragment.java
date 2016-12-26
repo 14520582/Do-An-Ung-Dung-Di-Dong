@@ -7,6 +7,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,7 +19,6 @@ import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,7 +49,7 @@ import static android.app.Activity.RESULT_OK;
  */
 public class RecipeFragment extends Fragment {
     View view;
-    private ListView listview;
+    private RecyclerView listview;
     ImageView img;
     private static int RESULT_LOAD_IMAGE = 1;
     private DatabaseReference mDatabase;
@@ -57,7 +58,7 @@ public class RecipeFragment extends Fragment {
     ArrayList<String> listname=new ArrayList<String>();
     ArrayList<String> listimage=new ArrayList<String>();
     ArrayList<Boolean> listtruefalse=new ArrayList<Boolean>();
-    RecipeAdapterUser rpAdapter=null;
+    MyRecipeAdapter rpAdapter=null;
     ImageView avatar;
     TextView nameuser;
     Uri photoUrl;
@@ -82,10 +83,12 @@ public class RecipeFragment extends Fragment {
         nameprofile=user.getDisplayName();
         Picasso.with(getActivity()).load(photoUrl).into(avatar);
         nameuser.setText(nameprofile);
-        rpAdapter = new RecipeAdapterUser(this.getContext(),R.layout.introrecipeuser,listrecipe,listUserKey,listname,listimage,listtruefalse);
+        listview.setLayoutManager(new LinearLayoutManager(getActivity()));
+        rpAdapter = new MyRecipeAdapter(listrecipe,listUserKey,listname,listimage,listtruefalse);
         LoadData();
 
         listview.setAdapter(rpAdapter);
+        listview.addItemDecoration(new ItemDivider(getActivity()));
         buttonedit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
@@ -131,7 +134,7 @@ public class RecipeFragment extends Fragment {
         return view;
     }
     private void Mapping(){
-        listview=(ListView) view.findViewById(R.id.listView);
+        listview=(RecyclerView) view.findViewById(R.id.listView);
         avatar=(ImageView) view.findViewById(R.id.imageViewUser);
         nameuser=(TextView) view.findViewById(R.id.textViewUser);
         img=(ImageView) view.findViewById(R.id.imageBackground1);

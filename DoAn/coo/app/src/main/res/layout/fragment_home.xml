@@ -53,13 +53,11 @@
 
             </RelativeLayout>
 
-            <ListView
+            <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
-                android:id="@+id/listViewHome"
-                android:dividerHeight="10dp"
                 android:layout_height="match_parent"
-                android:visibility="visible"
-                android:paddingTop="15dp" />
+                android:id="@+id/listView"
+                android:layout_marginTop="10dp" />
 
         </LinearLayout>
     </ScrollView>

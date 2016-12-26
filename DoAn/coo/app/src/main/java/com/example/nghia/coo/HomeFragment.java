@@ -4,6 +4,8 @@ package com.example.nghia.coo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,7 +16,6 @@ import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,7 +36,7 @@ public class HomeFragment extends Fragment {
     Button addRecipe;
     View view;
     private DatabaseReference mDatabase;
-    private ListView listview;
+    private RecyclerView listview;
     ImageView imagebutton;
     ArrayList<UserKey> listUserKey =new ArrayList<UserKey>();
     ArrayList<Recipe> listrecipe=new ArrayList<Recipe>();
@@ -43,7 +44,7 @@ public class HomeFragment extends Fragment {
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     ArrayList<String> listimage=new ArrayList<String>();
     ArrayList<Boolean> listtruefalse=new ArrayList<Boolean>();
-    RecipeAdapter rpAdapter=null;
+    HomeReAdapter rpAdapter=null;
 
 
     public HomeFragment () {
@@ -79,23 +80,12 @@ public class HomeFragment extends Fragment {
                 goAddRecipeScreen();
             }
         });
-
-        rpAdapter = new RecipeAdapter(this.getContext(),R.layout.introrecipe,listrecipe,listUserKey,listname,listimage,listtruefalse);
-      /* mDatabase.child("Recipes").child("-KXKadRVowx0fZBCOpv_").child("like").orderByChild("liker").equalTo(user.getUid()).removeEventListener(new ValueEventListener() {
-           @Override
-           public void onDataChange(DataSnapshot dataSnapshot) {
-
-           }
-
-           @Override
-           public void onCancelled(DatabaseError databaseError) {
-
-           }
-       });*/
+        listview.setLayoutManager(new LinearLayoutManager(getActivity()));
+        rpAdapter = new HomeReAdapter(listrecipe,listUserKey,listname,listimage,listtruefalse);
         LoadData();
       //  int totalItemsHeight=0;
         listview.setAdapter(rpAdapter);
-
+        listview.addItemDecoration(new ItemDivider(getActivity()));
 
 
 
@@ -289,7 +279,7 @@ public class HomeFragment extends Fragment {
 
     }
     private void Mapping(){
-        listview=(ListView) view.findViewById(R.id.listViewHome);
+        listview=(RecyclerView) view.findViewById(R.id.listView);
 
 
 
